@@ -50,12 +50,14 @@ def generate(no, file):
       result = generate_text(file_path)
       output_text = f"{id} OUTPUT Result.text: {result['text']}"
       print(output_text)
-      print(f"===\n {no} RESULT\n===")
       file.write(f"{input_text}\n{output_text}\n")
 
 count = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].strip() and sys.argv[1].strip() != "0" else 3
 
 for i in range(count):
   no = "{:02d}".format(i)
-  with open(os.path.join("result", f"{no}-result.txt"), "a+") as file:
+  file_path = os.path.join("result", f"{no}-result.txt")
+  with open(file_path, "a+") as file:
     generate(no, file)
+  print(f"===\n {no} RESULT\n===")
+  print(read_text_from_file(file_path))
