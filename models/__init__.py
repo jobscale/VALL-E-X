@@ -10,9 +10,7 @@ from .macros import (
     NUM_TEXT_TOKENS,
     SPEAKER_EMBEDDING_DIM,
 )
-from .transformer import Transformer
 from .vallex import VALLE, VALLF
-from .visualizer import visualize
 
 
 def add_model_arguments(parser: argparse.ArgumentParser):
@@ -123,14 +121,6 @@ def get_model(params) -> nn.Module:
             num_quantizers=params.num_quantizers,
         )
     else:
-        assert params.model_name in ["Transformer"]
-        model = Transformer(
-            params.decoder_dim,
-            params.nhead,
-            params.num_decoder_layers,
-            norm_first=params.norm_first,
-            add_prenet=params.add_prenet,
-            scaling_xformers=params.scaling_xformers,
-        )
+        raise ValueError("No such model")
 
     return model

@@ -2,6 +2,7 @@ import nltk
 import jieba
 import sudachipy
 import langid
+nltk.download('punkt')
 langid.set_languages(['en', 'zh', 'ja'])
 
 def split_text_into_sentences(text):
@@ -40,15 +41,3 @@ def split_text_into_sentences(text):
         return sentences
 
     raise RuntimeError("It is impossible to reach here.")
-
-long_text = """
-This is a very long paragraph, so most TTS model is unable to handle it. Hence, we have to split it into several sentences. With the help of NLTK, we can split it into sentences. However, the punctuation is not preserved, so we have to add it back. How are we going to do write this code? Let's see. 
-"""
-
-long_text = """
-现在我们要来尝试一下中文分句。因为很不幸的是，NLTK不支持中文分句。幸运的是，我们可以使用jieba来分句。但是，jieba分句后，标点符号会丢失，所以我们要手动添加回去。我现在正在想办法把这个例句写的更长更复杂一点，来测试jieba分句的性能。嗯......省略号，感觉不太好，因为省略号不是句号，所以jieba不会把它当作句子的结尾。会这样吗？我们来试试看。
-"""
-
-long_text = """
-これなら、英語と中国語の分句もできる。でも、日本語はどうする？まつわ、ChatGPTに僕と教えてください。ちょーと待ってください。あ、出来た！
-"""

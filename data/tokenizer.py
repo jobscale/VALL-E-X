@@ -23,13 +23,6 @@ import torchaudio
 from encodec import EncodecModel
 from encodec.utils import convert_audio
 
-try:
-    from pypinyin import Style, pinyin
-    from pypinyin.style._utils import get_finals, get_initials
-except Exception:
-    pass
-
-
 def remove_encodec_weight_norm(model):
     from encodec.modules import SConv1d
     from encodec.modules.seanet import SConvTranspose1d, SEANetResnetBlock
@@ -76,8 +69,6 @@ class AudioTokenizer:
             device = torch.device("cpu")
             if torch.cuda.is_available():
                 device = torch.device("cuda:0")
-            if torch.backends.mps.is_available():
-                device = torch.device("mps")
 
         self._device = device
 
