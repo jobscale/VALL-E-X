@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 from utils.prompt_making import make_prompt
 from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
@@ -37,6 +38,7 @@ def generate(no, file):
   # text from multi line
   for i, line in enumerate(text.split('\n')):
     if line:
+      start = time.time_ns() // 10**6
       id = "{:03d}".format(i)
       input_text = f"{id} INPUT Speech.text: {line}"
       print(input_text)
@@ -50,7 +52,9 @@ def generate(no, file):
       result = generate_text(file_path)
       output_text = f"{id} OUTPUT Result.text: {result['text']}"
       print(output_text)
-      file.write(f"{input_text}\n{output_text}\n")
+      duration = ((time.time_ns() // 10**6) - start) / 1000
+      print({ "Duration": duration })
+      file.write(f"{input_text}\n{output_text}\nDuration: {duration} sec\n")
 
 count = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].strip() and sys.argv[1].strip() != "0" else 3
 
